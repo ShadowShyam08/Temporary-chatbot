@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .banner {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px; 
+        }
+        .chat-container {
+            width: 60%;
+            max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            text-align: center;
+        }
+        .chatbox {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .chatbox p {
+            margin: 5px 0;
+        }
+        .chatbox .user-message {
+            color: #4CAF50;
+            text-align: left;
+        }
+        .chatbox .bot-message {
+            color: #007BFF;
+            text-align: right;
+        }
+        input[type="text"]#chatInput {
+            width: 80%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button#sendChat {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button#sendChat:hover {
+            background-color: #45a049;
+        }
+        .guide-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .guide-container h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .step {
+            display: flex;
+            margin: 10px 0;
+        }
+        .step-number {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .step-text {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Welcome to Our Application</h1>
+        <p>Your gateway to smart interactions with our AI Chatbot.</p>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <h2>Chat with AI</h2>
+        <div class="chatbox" id="chatbox"></div>
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="sendChat" onclick="sendChat()">Send</button>
+    </div>
+        <div class="step">
+            <div class="guide-container">
+                <h1>This AI-ChatBot only performs below commands</h1>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Say "hi", "hello", or "hey" to greet the chatbot.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Ask "How are you?" to see how the chatbot responds.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Type "What can you do?" to learn about the chatbot's abilities.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-text">Ask "Tell me a joke" to hear a fun joke from the chatbot.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-text">Type "Motivate me" to receive an inspiring quote.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-text">Ask about the chatbot's favorites, like "What's your favorite food?"</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">7</div>
+                        <div class="step-text">Type "Weather" to get a response about weather updates.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">8</div>
+                        <div class="step-text">Ask "Time" to know the current time.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">9</div>
+                        <div class="step-text">Use "Calculate" followed by a math problem to get an answer.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">10</div>
+                        <div class="step-text">Say "Thank you" to receive a polite response from the chatbot.</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        </div>
+
+    <script>
+        function sendChat() {
+            const input = document.getElementById("chatInput").value.trim();
+            if (!input) return;
+            const chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += `<p class="user-message">You: ${input}</p>`;
+            setTimeout(() => {
+                const response = getBotResponse(input);
+                chatbox.innerHTML += `<p class="bot-message">AI: ${response}</p>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }, 1000);
+            document.getElementById("chatInput").value = "";
+        }
+
+        function getBotResponse(input) {
+    input = input.toLowerCase().trim();
+
+    // Greetings
+    if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
+        return "Hello! How's your day going? 😊";
+    }
+
+    // Asking about the bot
+    if (input.includes("how are you")) {
+        return "I'm just a bunch of code, but I'm feeling great! How about you?";
+    }
+
+    // Bot capabilities
+    if (input.includes("what can you do")) {
+        return "I can answer your questions, chat with you, tell jokes, give motivational quotes, and even do some basic math calculations! Try asking me anything. 😃";
+    }
+
+    // Jokes
+    if (input.includes("tell me a joke") || input.includes("joke")) {
+        const jokes = [
+            "Why don't skeletons fight each other? Because they don't have the guts! 😂",
+            "What did the ocean say to the beach? Nothing, it just waved! 🌊",
+            "Why did the scarecrow win an award? Because he was outstanding in his field! 😆"
+        ];
+        return jokes[Math.floor(Math.random() * jokes.length)];
+    }
+
+    // Motivational quotes
+    if (input.includes("motivate me") || input.includes("inspire me")) {
+        const quotes = [
+            "Believe in yourself! You are capable of amazing things. 💪",
+            "Don't watch the clock; do what it does. Keep going! ⏳",
+            "Your only limit is your mind. Keep pushing forward! 🚀"
+        ];
+        return quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    // Favorite topics
+    if (input.includes("your favorite") && input.includes("food")) {
+        return "I don't eat, but if I could, I'd probably enjoy something with lots of data! 😆";
+    }
+    if (input.includes("your favorite") && input.includes("color")) {
+        return "I love all colors, but green reminds me of fresh ideas and creativity! 🌿";
+    }
+
+    // Weather-related queries
+    if (input.includes("weather")) {
+        return "I can't check live weather, but you can use a weather app or ask your smart assistant! 🌤️";
+    }
+
+    // Time-related queries
+    if (input.includes("time")) {
+        const now = new Date();
+        return `It's currently ${now.toLocaleTimeString()}. Hope that helps! ⏰`;
+    }
+
+    // Mathematical calculations
+    if (input.includes("calculate")) {
+        try {
+            const expression = input.replace("calculate", "").trim();
+            const result = eval(expression);
+            return `The result is ${result}. 🧮`;
+        } catch {
+            return "Oops! I couldn't calculate that. Try again with a valid math expression. 😊";
+        }
+    }
+
+    // Thank you response
+    if (input.includes("thank you") || input.includes("thanks")) {
+        return "You're very welcome! I'm always here to help. 😊";
+    }
+
+    // Default response
+    return "I'm not sure how to respond to that, but I'm always learning! Try asking me something else. 😃";
+}
+
+        
+    </script>
+</body>
+</html>

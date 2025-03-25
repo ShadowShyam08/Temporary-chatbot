@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-CHATBOT</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+
+    <!-- Full-page Background Image -->
+    <img src="background.jpg" alt="Background Image" class="bg-image" 
+         style="position: absolute; width: 100%; height: 100vh; object-fit: cover; z-index: -1;">
+
+    <nav class="navbar">
+        <a href="#" class="logo">AI-CHATBOT</a>
+        <span class="menu-toggle">&#9776;</span>
+        <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user'));
+      const navbar = document.querySelector('.navbar ul');
+      
+      // If user is logged in
+      if (token && user) {
+        // Create logout button
+        const logoutItem = document.createElement('li');
+        const logoutLink = document.createElement('a');
+        logoutLink.href = '#';
+        logoutLink.textContent = 'Logout';
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Clear localStorage
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          // Redirect to login page
+          window.location.href = 'login.html';
+        });
+        
+        logoutItem.appendChild(logoutLink);
+        
+        // Replace login and register links with logout
+        const loginItem = document.querySelector('a[href="login.html"]').parentNode;
+        const registerItem = document.querySelector('a[href="register.html"]').parentNode;
+        
+        if (loginItem) navbar.removeChild(loginItem);
+        if (registerItem) navbar.removeChild(registerItem);
+        
+        navbar.appendChild(logoutItem);
+        
+        // Add welcome message
+        const welcomeItem = document.createElement('li');
+        const welcomeLink = document.createElement('a');
+        welcomeLink.href = '#';
+        welcomeLink.textContent = `Welcome, ${user.username}`;
+        welcomeItem.appendChild(welcomeLink);
+        navbar.appendChild(welcomeItem);
+      }
+    });
+</script>
+</html>
