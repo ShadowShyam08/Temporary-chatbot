@@ -1,1 +1,1 @@
-# college_review
+# AI chatbot
